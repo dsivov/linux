@@ -47,6 +47,7 @@ dtbo-$(CONFIG_ARCH_BCM2835) += \
 	hd44780-lcd.dtbo \
 	hifiberry-amp.dtbo \
 	hifiberry-dac.dtbo \
+	ddplayer-dac.dtbo \
 	hifiberry-dacplus.dtbo \
 	hifiberry-digi.dtbo \
 	hifiberry-digi-pro.dtbo \

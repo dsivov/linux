@@ -1,0 +1,39 @@
+// Definitions for HiFiBerry DAC
+/dts-v1/;
+/plugin/;
+
+/ {
+	compatible = "brcm,bcm2708";
+
+	fragment@0 {
+		target = <&i2s>;
+		__overlay__ {
+			status = "okay";
+		};
+	};
+
+	fragment@1 {
+		target-path = "/";
+		__overlay__ {
+			pcm5102a-codec {
+				#sound-dai-cells = <0>;
+				compatible = "ti,pcm5102a";
+				status = "okay";
+			};
+		};
+	};
+
+	fragment@2 {
+		target = <&sound>;
+		__overlay__ {
+			compatible = "hifiberry,hifiberry-dac,ddplayer,ddplayer-dac";
+			i2s-controller = <&i2s>;
+			status = "okay";
+                        clock48192-gpio = <&gpio 5 0>;
+                        clock4844-gpio = <&gpio 6 0>;
+                        clock96192-gpio = <&gpio 13 0>;
+                        mute-gpio = <&gpio 23 0>;
+                        reset-gpio = <&gpio 24 0>;
+		};
+	};
+};
