@@ -6,9 +6,14 @@ sudo PATH=$PATH:/home/dmdb/tools/arm-bcm2708/gcc-linaro-arm-linux-gnueabihf-rasp
 #sudo cp arch/arm/boot/dts/*.dtb  /home/dmdb/DDPLAYER/KernelBuild/root/boot/
 #sudo cp arch/arm/boot/dts/overlays/*.dtb* /home/dmdb/DDPLAYER/KernelBuild/root/boot/overlays/
 #sudo cp arch/arm/boot/dts/overlays/README /home/dmdb/DDPLAYER/KernelBuild/root/boot/overlays/
-sudo cp arch/arm/boot/dts/overlays/ddplayer-dac.dtbo ../Drivers/ddplayer-drivers/boot/overlays/ddplayer-dac.dtbo 
-sudo cp ../KernelBuild/lib/modules/4.14.88-v7+/kernel/sound/soc/bcm/snd-soc-ddplayer-dac.ko ../Drivers/ddplayer-drivers/lib/modules/4.14.71+/kernel/sound/soc/bcm/
-sudo cp ../KernelBuild/lib/modules/4.14.88-v7+/kernel/sound/soc/bcm/snd-soc-ddplayer-dac.ko ../Drivers/ddplayer-drivers/lib/modules/4.14.71-v7+/kernel/sound/soc/bcm/ 
+
+#sudo cp -r arch/arm/boot/dts/overlays/ddplayer-dac.dtbo ../Drivers/ddplayer-drivers/boot/overlays/ddplayer-dac.dtbo 
+#sudo cp -r ../KernelBuild/lib/modules/4.14.88-v7+/kernel/sound/soc/bcm/snd-soc-ddplayer-dac.ko ../Drivers/ddplayer-drivers/lib/modules/4.14.71+/kernel/sound/soc/bcm/
+#sudo cp -r ../KernelBuild/lib/modules/4.14.88-v7+/kernel/sound/soc/bcm/snd-soc-ddplayer-dac.ko ../Drivers/ddplayer-drivers/lib/modules/4.14.71-v7+/kernel/sound/soc/bcm/ 
+
+sudo cp -r arch/arm/boot/dts/overlays/ddplayer-dac.dtbo ../Drivers/ddplayer-drivers/boot/overlays/ddplayer-dac.dtbo
+sudo cp -r ../KernelBuild/lib/modules/4.14.90-v7+ ../Drivers/ddplayer-drivers/lib/modules/
+
 cd ../Drivers/
 sudo chown -R root:root *
 sudo tar -zcvf ddplayer-driver.tar.gz *
