@@ -17,8 +17,15 @@
 #include <linux/init.h>
 #include <linux/module.h>
 #include <linux/platform_device.h>
-
+#include <linux/gpio/consumer.h>
 #include <sound/soc.h>
+
+static int ddpl_mute(struct snd_soc_dai *dai, int mute);
+static struct gpio_desc *snd_rpi_ddplayer_mute;
+
+static const struct snd_soc_dai_ops ddpl_ops = {
+        .digital_mute = ddpl_mute,
+};
 
 static struct snd_soc_dai_driver pcm5102a_dai = {
 	.name = "pcm5102a-hifi",
@@ -30,12 +37,20 @@ static struct snd_soc_dai_driver pcm5102a_dai = {
 			   SNDRV_PCM_FMTBIT_S24_LE |
 			   SNDRV_PCM_FMTBIT_S32_LE
 	},
+        .ops = &ddpl_ops,
 };
+
 
 static struct snd_soc_codec_driver soc_codec_dev_pcm5102a;
 
 static int pcm5102a_probe(struct platform_device *pdev)
 {
+  printk("DDPLAYER CODEC PROBE\n");
+  snd_rpi_ddplayer_mute = devm_gpiod_get(&pdev->dev, "mute",
+			GPIOD_OUT_LOW);
+	if (IS_ERR(snd_rpi_ddplayer_mute)) {
+		printk("Cant't get mute from gpio\n");
+	}
 	return snd_soc_register_codec(&pdev->dev, &soc_codec_dev_pcm5102a,
 			&pcm5102a_dai, 1);
 }
@@ -45,6 +60,23 @@ static int pcm5102a_remove(struct platform_device *pdev)
 	snd_soc_unregister_codec(&pdev->dev);
 	return 0;
 }
+
+static int ddpl_mute(struct snd_soc_dai *dai, int mute)
+{
+        //struct snd_soc_codec *codec = dai->codec;
+        if (mute)
+        {
+                printk("DDPLAYER MUTE\n");
+                gpiod_set_value_cansleep(snd_rpi_ddplayer_mute, 1);
+        }
+        else
+        {
+                printk("DDPLAYER UNMUTE\n");
+                gpiod_set_value_cansleep(snd_rpi_ddplayer_mute, 0);
+        }
+        return 0;
+}
+
 
 static const struct of_device_id pcm5102a_of_match[] = {
 	{ .compatible = "ti,pcm5102a", },
