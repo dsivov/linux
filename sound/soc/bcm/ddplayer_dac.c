@@ -226,6 +226,6 @@ static struct platform_driver snd_rpi_ddplayer_dac_driver = { .driver = {
 
 module_platform_driver( snd_rpi_ddplayer_dac_driver);
 
-MODULE_AUTHOR("Dima Sivov <dsivov@google.com>");
+MODULE_AUTHOR("Dima Sivov <dsivov@gmail.com>");
 MODULE_DESCRIPTION("ASoC Driver for ddplayer DAC");
 MODULE_LICENSE("GPL v2");
